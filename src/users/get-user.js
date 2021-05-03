@@ -1,6 +1,6 @@
 var { getConnection } = require('../database');
 
-function getUsers(req, res, next) {
+function getUser(req, res, next) {
     getConnection(function (err, connection) {
       if (err) {
         res.send({
@@ -9,7 +9,7 @@ function getUsers(req, res, next) {
         next();
   
       } else {
-        var sql = `SELECT * FROM users`;
+        var sql = `SELECT * FROM users WHERE id_user='${req.params.id_user}'`;
   
         connection.query(sql, function (err, result) {
           if (err) {
@@ -32,5 +32,5 @@ function getUsers(req, res, next) {
   }
   
   module.exports={
-      getUsers:getUsers
+      getUser:getUser
   }

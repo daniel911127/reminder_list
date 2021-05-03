@@ -11,7 +11,7 @@ function deleteUser(req, res, next) {
     
         } else {
           var sql = `DELETE FROM users WHERE id_user = '${id_user}'`;
-          //console.log(sql);
+          console.log(sql);
     
           connection.query(sql, function (err, result) {
             if (err) {

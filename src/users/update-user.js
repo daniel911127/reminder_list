@@ -1,8 +1,8 @@
 var { getConnection } = require('../database');
 
-function addUser(req, res, next) {
+function updateUser(req, res, next) {
     var name=req.body.name;
-    var password=req.body.password;
+    var password=req.body.pasword;
     var country=req.body.country;
     var city=req.body.city;
     var email=req.body.email;
@@ -21,7 +21,7 @@ function addUser(req, res, next) {
           next();
     
         } else {
-          var sql = `INSERT INTO users (name, pasword,country,city,email) VALUES ('${name}', '${password}','${country}','${city}','${email}')`;
+          var sql = `UPDATE users  SET (name='${name}', pasword='${password}',country='${country}',city='${city}',email='${email}') WHERE id_user = '${req.params.id_user}'`;
     
           connection.query(sql, function (err, result) {
             if (err) {
@@ -30,7 +30,7 @@ function addUser(req, res, next) {
               });
             } else {
               res.send({
-                response: 'User inserted'
+                response: 'User updated'
               });
             }
     
@@ -41,5 +41,5 @@ function addUser(req, res, next) {
       });
 };
     module.exports = {
-        addUser : addUser
+        updateUser : updateUser
       }

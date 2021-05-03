@@ -1,6 +1,9 @@
 var { getConnection } = require('../database');
 
-function getItem(req, res, next) {
+function deleteItem(req, res, next) {
+
+    var id_message = req.params.id_message;
+    var id_list = req.params.id_list;
     getConnection(function (err, connection) {
         if (err) {
             res.send({
@@ -9,18 +12,17 @@ function getItem(req, res, next) {
             next();
 
         } else {
-            var sql = `SELECT * FROM items WHERE id_list='${req.params.id_list}' AND id_message='${req.params.id_message}' `;
+            var sql = `DELETE FROM items WHERE id_list = '${id_list}' AND id_message = '${id_message}'`;
+            console.log(sql);
 
             connection.query(sql, function (err, result) {
                 if (err) {
                     res.send({
-                        response: 'Error getting item. ' + err
+                        response: 'Error deleting item. ' + err
                     });
                 } else {
-                    //console.log(result);
-
                     res.send({
-                        result
+                        result: 'item deleted'
                     });
                 }
 
@@ -32,5 +34,5 @@ function getItem(req, res, next) {
 }
 
 module.exports = {
-    getItem: getItem
+    deleteItem: deleteItem
 }
